@@ -1,1 +1,3 @@
 # jQuery
+
+Learning of jQuery

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Jquery - Partie 4 - Exercice 2</title>
+  </head>
+  <body>
+
+    <div>
+      <label for="salary">Your salary</label><br>
+      <input type="number" name="salary" class="salary" min="0" id="salary" required>
+    </div>
+    <div>
+      <input type="radio" value="male" name="gender" class="gender" id="male"><label for="male">Male</label><br>
+      <input type="radio" value="female" name="gender" class="gender" id="female"><label for="female">Female</label>
+    </div>
+    <div>
+      <label for="numberChild">How many children?</label><br>
+      <input type="number" name="numberChild" class="numberChild" min="0" id="numberChild" value="0" required>
+    </div>
+    <button class="calcul" type="button">Calculate!</button>
+
+    <hr>
+
+    <div class="message">
+      <table>
+        <tbody>
+          <tr>
+            <td>Salary</td>
+            <td id="salaryDisplay"></td>
+          </tr>
+          <tr>
+            <td>Expenses (18%)</td>
+            <td id="expensesDisplay"></td>
+          </tr>
+          <tr>
+            <td>Insurance (7%)</td>
+            <td id="insuranceDisplay"></td>
+          </tr>
+          <tr>
+            <td>Contributions (5%)</td>
+            <td id="contributionsDisplay"></td>
+          </tr>
+          <tr>
+            <td>Gender discount</td>
+            <td id="genderDiscountDisplay"></td>
+          </tr>
+          <tr>
+            <td>Children discount</td>
+            <td id="childrenDiscountDisplay"></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td id="totalDisplay"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+
+      $('.calcul').on('click', function(e) {
+
+        let salary = Number($('.salary').val());
+        let gender = $('.gender:checked').val();
+        let numberChild = Number($('.numberChild').val());
+
+        let totalExpenses = 0, discount = 0;
+
+        $('#salaryDisplay').text(salary  + '€')
+        totalExpenses += Math.round(salary * 0.18);
+        $('#expensesDisplay').text('-' + Math.round(salary * 0.18) + '€');
+        totalExpenses += Math.round(salary * 0.07);
+        $('#insuranceDisplay').text('-' + Math.round(salary * 0.07) + '€');
+        totalExpenses += Math.round(salary * 0.05);
+        $('#contributionsDisplay').text('-' + Math.round(salary * 0.05) + '€');
+        if ( gender == 'female') {
+          totalExpenses -= Math.round(salary * 0.02);
+          $('#genderDiscountDisplay').text('+' + Math.round(salary * 0.02) + '€');
+        } else {
+          $('#genderDiscountDisplay').text('0€');
+        }
+        if (numberChild >= 4) {
+          totalExpenses -= Math.round(salary * 0.02);
+          $('#childrenDiscountDisplay').text('+' + Math.round(salary * 0.02) + '€');
+        } else if (numberChild == 3) {
+          totalExpenses -= Math.round(salary * 0.01);
+          $('#childrenDiscountDisplay').text('+' + Math.round(salary * 0.01) + '€');
+        } else {
+          $('#childrenDiscountDisplay').text('0€');
+        }
+        $('#totalDisplay').text(salary - totalExpenses + '€')
+
+
+      })
+
+    </script>
+  </body>
+</html>

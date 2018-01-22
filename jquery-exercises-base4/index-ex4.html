@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Jquery - Partie 4 - Exercice 4</title>
+    <style>
+      .message {
+        display: none;
+      }
+      .warning {
+        color:red;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div>
+      <label for="firstName">First Name</label><br>
+      <input type="text" name="firstName" class="firstName" id="firstName" >
+    </div>
+    <div>
+      <label for="lastName">Last Name</label><br>
+      <input type="text" name="lastName" class="lastName" id="lastName" required>
+    </div>
+    <div>
+      <label for="dateOfBirth">Date of birth</label><br>
+      <input type="date" name="dateOfBirth" class="dateOfBirth" id="dateOfBirth" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])[- /.](0[1-9]|1[012])[- /.][0-9]{4}" required>
+    </div>
+    <div>
+      <label for="placeOfBirth">Place of birth</label><br>
+      <input type="text" name="placeOfBirth" class="placeOfBirth" id="placeOfBirth" required>
+    </div>
+    <div>
+      <label for="employment">Employment</label><br>
+      <input type="text" name="employment" class="employment" id="employment" required>
+    </div>
+    <div>
+      <label for="society">Society</label><br>
+      <input type="text" name="society" class="society" id="society" required>
+    </div>
+    <button class="generate" type="button">Generate</button>
+    <hr>
+    <div class="message">
+      <span class="displayFirstName"></span> <span class="displayLastName"></span>,
+      born on <span class="displayDateOfBirth"></span> at <span class="displayPlaceOfBirth"></span>,
+      currently <span class="displayEmployment"></span> at <span class="displaySociety"></span>
+    </div>
+    <div class="alert warning"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      let validateName = function(name) {
+        let filter = /^[a-zA-Z0-9-_]+$/;
+        if (filter.test(name)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      $('.generate').on('click', function(e) {
+
+        $('.alert').hide();
+        $('.message').hide();
+
+        let isValid;
+        $("input").each(function() {
+          if ($(this).val() == "") {
+            isValid = false;
+          } else {
+            isValid = true;
+          }
+        });
+
+        if ( !isValid ) {
+          $('.alert').html('Please filled all the information');
+          $('.alert').show();
+        } else {
+          $('.displayFirstName').text( $('.firstName').val() );
+          $('.displayLastName').text( $('.lastName').val() );
+          let finalDate = $('.dateOfBirth').val().split('-');
+          $('.displayDateOfBirth').text( finalDate[2] + '/' + finalDate[1] + '/' + finalDate[0] );
+          $('.displayPlaceOfBirth').text( $('.placeOfBirth').val() );
+          $('.displayEmployment').text( $('.employment').val() );
+          $('.displaySociety').text( $('.society').val() );
+          $('.message').show();
+        }
+
+      });
+    </script>
+  </body>
+</html>

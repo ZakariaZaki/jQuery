@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Exercice Jquery - Partie 3</title>
+    <style>
+      .rectangle {
+        border:1px solid red;
+        width:200px;
+        height:25px;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" name="number" class="number" value="0">
+    <button name="addNumber" class="addNumber">+</button>
+    <hr>
+    <input type="text" name="number2" class="number2" value="0">
+    <button name="addNumber2" class="addNumber2">+</2button>
+    <button name="removeNumber2" class="removeNumber2">-</button>
+    <hr>
+    <p>Find the secret number between 0 &amp; 100</p>
+    <input type="number" name="userInput" class="userInput" min="0" max="100" required>
+    <button name="tryUserInput" class="tryUserInput">Try</button>
+    <p class="answer"></p>
+    <hr>
+    <div class="rectangle"></div>
+    <button name="add10px" class="ex4 add10px" value="add10px">+10px</button>
+    <button name="setGreen" class="ex4 setGreen" value="setGreen">Green BG</button>
+    <button name="resetColors" class="ex4 resetColors" value="resetColors">Reset colors</button>
+    <button name="disappearRectangle" class="ex4 disappearRectangle" value="disappearRectangle">Hide</button>
+    <button name="appearRectangle" class="ex4 appearRectangle" value="appearRectangle">Show</button>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      // Ex 1
+      $('.addNumber').on('click',function(e) {
+        $('.number').val( Number($('.number').val())+1 );
+      });
+
+      // Ex 2
+      $('.addNumber2').on('click',function(e) {
+        $('.number2').val( Number($('.number2').val())+1 );
+      });
+      $('.removeNumber2').on('click',function(e) {
+        $('.number2').val( Number($('.number2').val())-1 );
+      });
+
+      // Ex 3
+      let randomNumber = Math.round( Math.random() * 100 );
+      let attemptCount = 1;
+      let message = '';
+      $('.tryUserInput').on('click',function(e) {
+        let userInput = Number($('.userInput').val());
+        if (userInput == '') {
+          message = '✗ You can\'t try with an empty value';
+        } else if (userInput < 0 || userInput > 100) {
+          message = '✗ We said between 0 and 100.';
+          attemptCount++;
+        } else if (userInput < randomNumber) {
+          message = '✗ Your number is too small.'
+          attemptCount++;
+        } else if (userInput > randomNumber) {
+          message = '✗ Your number is too high.'
+          attemptCount++;
+        } else {
+          if (attemptCount === 1) { // if we won at his first attempt
+            message = '✓ Congrats! You won at your first try!';  // we change the text into the object
+          } else { // if we won with more than one attempt
+            message = '✓ Congrats! You won in ' + attemptCount + ' attempts.';  // we change the text into the object
+          }
+        }
+        $('.answer').html(message);
+      });
+
+      // Ex 4
+      $('.ex4').on('click', function(e) {
+        let action = $(this).val();
+
+        if (action == 'add10px') {
+          let height = $('.rectangle').height() + 10;
+          //console.log(height);
+          if (height > 100) {
+            $('.rectangle').css('height','25px');
+          } else {
+            $('.rectangle').css('height',height+'px');
+          }
+        } else if (action == 'setGreen') {
+          $('.rectangle').css('background','green');
+        } else if (action == 'resetColors') {
+          $('.rectangle').css('background','inherit');
+        } else if (action == 'disappearRectangle') {
+          $('.rectangle').hide();
+        } else if (action == 'appearRectangle') {
+          $('.rectangle').show();
+        }
+      })
+    </script>
+
+
+  </body>
+</html>

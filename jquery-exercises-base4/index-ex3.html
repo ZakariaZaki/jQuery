@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Jquery - Partie 4 - Exercice 3</title>
+  </head>
+  <body>
+
+    <div>
+      <label for="email">Email</label><br>
+      <input type="text" name="email" class="email" id="email" required>
+    </div>
+    <div>
+      <label for="phone">Phone</label><br>
+      <input type="text" name="phone" class="phone" id="phone" required>
+    </div>
+    <div>
+      <label for="name">First Name</label><br>
+      <input type="text" name="name" class="name" id="name" required>
+    </div>
+    <button class="check" type="button">Check!</button>
+    <hr>
+    <div class="message">
+      <div class="emailDisplay">Email: <span></span></div>
+      <div class="phoneDisplay">Phone: <span></span></div>
+      <div class="nameDisplay">First name: <span></span></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      let validateEmail = function(mail) {
+        let filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+         if (filter.test(mail)) {
+           return true;
+         } else {
+           return false;
+         }
+      }
+      let validatePhone = function(phone) {
+        let filter = /^([0-9]{10})$/;
+        if (filter.test(phone)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      let validateName = function(name) {
+        let filter = /^[a-zA-Z0-9-_]+$/;
+        if (filter.test(name)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      $('.check').on('click', function(e) {
+        if ( validateEmail( $('.email').val() ) ) {
+          $('.emailDisplay span').text('Ok');
+        } else {
+          $('.emailDisplay span').text('Nok');
+        }
+        if ( validatePhone( $('.phone').val() ) ) {
+          $('.phoneDisplay span').text('Ok');
+        } else {
+          $('.phoneDisplay span').text('Nok');
+        }
+        if ( validateName( $('.name').val() ) ) {
+          $('.nameDisplay span').text('Ok');
+        } else {
+          $('.nameDisplay span').text('Nok');
+        }
+      });
+    </script>
+  </body>
+</html>
